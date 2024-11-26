@@ -16,7 +16,7 @@ a series of different options are given to the user which can be repeated.
 #include <vector>
 #include <fstream>
 #include <string>
-#include "Votes.h" // includes the file with all of the Votes class setters and getters, constructors, etc..
+#include "Votes.h" // includes the file with the Votes class mutators and accessors, constructors, etc..
 #include "Candidates.h" // stores the class of type Candidates, which is used to store candidates (no repeats)
                         // their votes, and their party
 
@@ -69,8 +69,7 @@ void MainMenu(vector<Votes>& voteInformation, vector<Candidates>& candidateList)
 
     // loop ends when the user input is 6
     do{
-        cout << "\n|------[ Menu ]------|\n";
-        cout << "Select a menu option:" << endl;
+        cout << "\n\nSelect a menu option:" << endl;
         cout << "  1. Data overview" << endl;
         cout << "  2. National results" << endl;
         cout << "  3. State results" << endl;
@@ -123,10 +122,10 @@ void PushFileToVector(vector<Votes>& voteInfo){
     cout << "\n |-------------| Election Data Parser |-------------|\n";
     cout << "\n_________________________________________________________";
     cout <<"\nThe goal of this project is to read formatted MIT .txt  |\nfiles containing results from different elections.      |"
-            "\nThe program parses the data and organizes it in various |\nways based on the user's input.                         |"
+            "\nThe program parses the data and analyzes it in various  |\nways based on the user's input.                         |"
             "\n\t\tYou will now be prompted for a file.            |"
             "\n________________________________________________________/"
-            "\n\n(Current supported options include votes-2012.txt, 2016.txt, and 2020.txt)\n\n";
+            "\n\n(Current supported options include votes-2012.txt, -2016.txt, and -2020.txt)\n\n";
 
 
     // prompt for file
@@ -268,21 +267,25 @@ void DataOverview(vector<Votes>& voteInformation){
         temp = (voteInformation.at(i)).getVotes();
         totalVotes += stoi(temp);
     }
-    cout << "Number of election records: " << voteInformation.size() << "\nTotal number of votes recorded: " << totalVotes << endl;
+
+    cout << "\n|=-=-=-=-=-=-=[ National Overview ]=-=-=-=-=-=-=|";
+    cout << "\n Number of election records: " << voteInformation.size() << "\n Total number of votes recorded: " << totalVotes << endl;
+    cout << "\n|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=|" << endl;
 }
 
 // prints out a formatted output of the national votes collected during the pushCandidateToVector function
 // candidates are pre sorted
 void NationalResults(vector<Votes> voteInformation, vector<Candidates>& candidateList){
+
+    cout << "\n|=-=-=-=-=-=-=[ Popular Votes ]=-=-=-=-=-=-=|" << endl;
     for(int i = 0; i < candidateList.size(); i++){
         cout << left << setw(20) << ((candidateList.at(i)).getName());
         cout << left << setw(15) << ((candidateList.at(i)).getParty());
         cout << right << setw(10) << ((candidateList.at(i)).getVotesNat());
         cout << endl;
     }
+    cout << "\n|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=|" << endl;
 }
-
-
 
 
 
@@ -347,6 +350,7 @@ void StateResults(vector<Votes> voteInformation, vector<Candidates> candidateLis
         }
     }
 
+    cout << "\n|=-=-=-=-=-=-=[ State Votes in 150,000's ]=-=-=-=-=-=-=|" << endl;
     // prints out the sorted tallies based on amounts of 150,000
     for(i = 0; i < candidateList.size(); i++){
         int votesFromState = (candidateList.at(i)).getVotesState(); //stores value of total state votes for specific candidate
@@ -364,6 +368,7 @@ void StateResults(vector<Votes> voteInformation, vector<Candidates> candidateLis
 
         cout << endl;
     }
+    cout << "\n|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-|" << endl;
 }
 
 
@@ -400,6 +405,7 @@ void CandidateResults(vector<Votes> voteInformation){
         }
     }
 
+    cout << "\n|=-=-=-=-=-=-=[ Candidate Results ]=-=-=-=-=-=-=|" << endl;
     // this loop increments through all the states. the total votes, candidate votes, and percentage are found and output
     for(int i = 0; i < NUM_STATES; i++){
 
@@ -428,7 +434,8 @@ void CandidateResults(vector<Votes> voteInformation){
 
         cout << endl;
     }
-    cout << "The best state for " << name << " is " << bestState << endl;
+    cout << "\nThe best state for " << name << " is " << bestState << endl;
+    cout << "\n|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=|" << endl;
 }
 
 
@@ -446,6 +453,7 @@ void CountyResults(vector<Votes> voteInformation){
         county.at(i) = toupper(county.at(i));
     }
 
+    cout << "\n|=-=-=-=-=-=-=-=-=-=-=-=-=[ County Results ]=-=-=-=-=-=-=-=-=-=-=-=-=|" << endl;
     // this for loop simply stores each entries values for outputting and concatenation of the location strings
     for(int i = 0; i < voteInformation.size(); i++){
         string fullCounty = (voteInformation.at(i)).getCounty();
@@ -460,4 +468,5 @@ void CountyResults(vector<Votes> voteInformation){
             cout << right << setw(10) << votes << endl;
         }
     }
+    cout << "\n|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=|" << endl;
 }
